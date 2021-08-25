@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -120,12 +120,15 @@ export default function PrimarySearchAppBar() {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Organization.."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
               }}
               inputProps={{ 'aria-label': 'search' }}
+              value={props.valueSearch}
+              onChange={props.handleChangeSearch}
+              defaultValue={props.defaultValueSearch}
             />
           </div>
           <div className={classes.grow} />

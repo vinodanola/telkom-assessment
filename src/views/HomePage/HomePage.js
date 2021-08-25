@@ -44,13 +44,14 @@ export default function InteractiveList() {
   const classes = useStyles();
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
+  const [valueSearch, setValueSearch] = React.useState('octokit');
 
   const [error, setError] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [items, setItems] = React.useState([]);
 
   useEffect(() => {
-    fetch('https://api.github.com/orgs/octokit/repos')
+    fetch('https://api.github.com/orgs/' + valueSearch + '/repos')
       .then(res => res.json())
       .then(
         result => {
@@ -62,7 +63,7 @@ export default function InteractiveList() {
           setError(error);
         }
       );
-  }, []);
+  }, [valueSearch]);
 
   console.log(items);
 
@@ -73,11 +74,15 @@ export default function InteractiveList() {
   } else {
     return (
       <div className={classes.root}>
-        <AppBar />
+        <AppBar
+          valueSearch={valueSearch}
+          handleChangeSearch={e => setValueSearch(e.target.value)}
+          defaultValue="octokit"
+        />
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography variant="h6" className={classes.title}>
-              {}
+              Repositories of {valueSearch}
             </Typography>
             <div className={classes.demo}>
               <List dense={dense}>
