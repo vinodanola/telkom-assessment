@@ -19,6 +19,11 @@ import TextField from '@material-ui/core/TextField';
 import AppBar from '../../components/Surfaces/AppBar.js';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    maxWidth: '100%',
+    margin: 0
+  },
   demo: {
     backgroundColor: theme.palette.background.paper
   },
@@ -45,7 +50,7 @@ export default function InteractiveList() {
   const [items, setItems] = React.useState([]);
 
   useEffect(() => {
-    fetch('https://api.github.com/orgs/octokita/repos')
+    fetch('https://api.github.com/orgs/octokit/repos')
       .then(res => res.json())
       .then(
         result => {
@@ -76,7 +81,7 @@ export default function InteractiveList() {
             </Typography>
             <div className={classes.demo}>
               <List dense={dense}>
-                {items.message == 'Not Found' ? <span>No Data.</span> : ''}
+                {!items.id ? <span>{items.message}</span> : ''}
                 {items.length > 0 &&
                   items.map(item => (
                     <ListItem key={item.id}>
