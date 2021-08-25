@@ -44,14 +44,14 @@ export default function InteractiveList() {
   const classes = useStyles();
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
-  const [valueSearch, setValueSearch] = React.useState('octokit');
+  const [valueSearch, setValueSearch] = React.useState('facebook');
 
   const [error, setError] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [items, setItems] = React.useState([]);
 
   useEffect(() => {
-    fetch('https://api.github.com/orgs/' + valueSearch + '/repos')
+    fetch('https://api.github.com/users/' + valueSearch + '/repos')
       .then(res => res.json())
       .then(
         result => {

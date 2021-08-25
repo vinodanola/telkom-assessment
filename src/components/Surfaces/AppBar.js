@@ -120,7 +120,7 @@ export default function PrimarySearchAppBar(props) {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Organization.."
+              placeholder="Username.."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
