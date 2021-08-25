@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper
   },
   title: {
-    margin: theme.spacing(4, 0, 2)
+    margin: '50px 20px'
   }
 }));
 
@@ -82,7 +82,7 @@ export default function InteractiveList() {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography variant="h6" className={classes.title}>
-              Repositories of {valueSearch}
+              {valueSearch + "'s"} repositories
             </Typography>
             <div className={classes.demo}>
               <List dense={dense}>
