@@ -7,14 +7,6 @@ import HomePage from './views/HomePage/HomePage.js';
 
 const hist = createBrowserHistory();
 
-const useStyles = makeStyles(theme => ({
-  App: {
-    flexGrow: 1,
-    maxWidth: '100%',
-    margin: 0
-  }
-}));
-
 export default function App() {
   return (
     <div className="App">
