@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import './style.css';
-import HomePage from 'views/HomePage/HomePage.js';
+import HomePage from './views/HomePage/HomePage.js';
 
 const hist = createBrowserHistory();
 
