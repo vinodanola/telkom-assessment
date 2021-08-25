@@ -14,7 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
-import DeleteIcon from '@material-ui/icons/Delete';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import TextField from '@material-ui/core/TextField';
 import AppBar from '../../components/Surfaces/AppBar.js';
 
@@ -101,7 +101,7 @@ export default function InteractiveList() {
                       />
                       <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete">
-                          <DeleteIcon />
+                          <CloudDownloadIcon />
                         </IconButton>
                       </ListItemSecondaryAction>
                     </ListItem>
