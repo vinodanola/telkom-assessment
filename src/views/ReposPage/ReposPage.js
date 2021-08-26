@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -15,8 +15,14 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import StarIcon from '@material-ui/icons/Star';
 import TextField from '@material-ui/core/TextField';
+import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import AppBar from '../../components/Surfaces/AppBar.js';
+import Badge from '@material-ui/core/Badge';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,16 +35,31 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     margin: '50px 20px'
+  },
+  listItemText: {
+    wordWrap: 'break-word',
+    width: '70%'
+  },
+  rootAvatar: {},
+  small: {
+    width: '30px',
+    height: '30px'
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7)
   }
 }));
 
-function generate(element) {
-  return [0, 1, 2].map(value =>
-    React.cloneElement(element, {
-      key: value
-    })
-  );
-}
+const StyledBadge = withStyles(theme => ({
+  badge: {
+    right: -8,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+    fontSize: '10px'
+  }
+}))(Badge);
 
 export default function InteractiveList() {
   const classes = useStyles();
@@ -97,12 +118,38 @@ export default function InteractiveList() {
                       </ListItemAvatar>
                       <ListItemText
                         primary={item.full_name}
-                        secondary={secondary ? 'Secondary text' : null}
+                        secondary={
+                          <div className={classes.listItemText}>
+                            {item.description}
+                          </div>
+                        }
                       />
                       <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete">
-                          <CloudDownloadIcon />
-                        </IconButton>
+                        <Tooltip title="Stargazers" placement="top">
+                          <IconButton>
+                            <StyledBadge
+                              badgeContent={item.stargazers_count}
+                              color="primary"
+                            >
+                              <StarIcon />
+                            </StyledBadge>
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Watchers" placement="top">
+                          <IconButton>
+                            <StyledBadge
+                              badgeContent={item.watchers_count}
+                              color="primary"
+                            >
+                              <VisibilityIcon />
+                            </StyledBadge>
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Download" placement="top">
+                          <IconButton edge="end">
+                            <CloudDownloadIcon />
+                          </IconButton>
+                        </Tooltip>
                       </ListItemSecondaryAction>
                     </ListItem>
                   ))}
