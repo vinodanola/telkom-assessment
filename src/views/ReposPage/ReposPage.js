@@ -157,7 +157,7 @@ export default function InteractiveList() {
               )}
             </div>
             <Typography variant="h6" className={classes.title}>
-              {valueSearch + "'s repositories"}
+              {valueSearch + (valueSearch ? "'s repositories" : '')}
             </Typography>
             <div className={classes.demo}>
               <List dense={dense}>
