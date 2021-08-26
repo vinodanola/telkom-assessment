@@ -34,7 +34,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper
   },
   title: {
-    margin: '50px 20px',
+    margin: '30px 20px',
+    marginTop: '5px',
     textAlign: 'center'
   },
   listItemText: {
@@ -42,7 +43,20 @@ const useStyles = makeStyles(theme => ({
     width: '70%',
     fontSize: '12px'
   },
-  rootAvatar: {},
+  rootAvatar: {
+    display: 'block',
+    '& > *': {
+      margin: theme.spacing(1)
+    },
+    width: '100%',
+    textAlign: 'center',
+    marginTop: theme.spacing(5)
+  },
+  avatar: {
+    display: 'inline-box',
+    width: theme.spacing(15),
+    height: theme.spacing(15)
+  },
   small: {
     width: '30px',
     height: '30px'
@@ -71,9 +85,23 @@ export default function InteractiveList() {
 
   const [error, setError] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [users, setUsers] = React.useState([]);
   const [items, setItems] = React.useState([]);
 
   useEffect(() => {
+    fetch('https://api.github.com/users/' + valueSearch)
+      .then(res => res.json())
+      .then(
+        result => {
+          setIsLoaded(true);
+          setUsers(result);
+        },
+        error => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      );
+
     fetch('https://api.github.com/users/' + valueSearch + '/repos')
       .then(res => res.json())
       .then(
@@ -88,7 +116,7 @@ export default function InteractiveList() {
       );
   }, [valueSearch]);
 
-  console.log(items);
+  console.log(users);
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -101,8 +129,22 @@ export default function InteractiveList() {
           valueSearch={valueSearch}
           handleChangeSearch={e => setValueSearch(e.target.value)}
         />
-        <Grid container direction="row" justify="center" alignItems="center">
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
           <Grid item xs={12} md={8}>
+            <div className={classes.rootAvatar} xs={12} md={8}>
+              {users && (
+                <Avatar
+                  alt={users.login}
+                  src={users.avatar_url}
+                  className={classes.avatar}
+                />
+              )}
+            </div>
             <Typography variant="h6" className={classes.title}>
               {valueSearch + "'s"} repositories
             </Typography>
