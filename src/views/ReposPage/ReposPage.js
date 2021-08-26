@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -91,33 +91,42 @@ export default function InteractiveList() {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [users, setUsers] = React.useState([]);
   const [items, setItems] = React.useState([]);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
-    fetch('https://api.github.com/users/' + valueSearch)
-      .then(res => res.json())
-      .then(
-        result => {
-          setIsLoaded(true);
-          setUsers(result);
-        },
-        error => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+    }
 
-    fetch('https://api.github.com/users/' + valueSearch + '/repos')
-      .then(res => res.json())
-      .then(
-        result => {
-          setIsLoaded(true);
-          setItems(result);
-        },
-        error => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
+    timeoutRef.current = setTimeout(() => {
+      timeoutRef.current = null;
+
+      fetch('https://api.github.com/users/' + valueSearch)
+        .then(res => res.json())
+        .then(
+          result => {
+            setIsLoaded(true);
+            setUsers(result);
+          },
+          error => {
+            setIsLoaded(true);
+            setError(error);
+          }
+        );
+
+      fetch('https://api.github.com/users/' + valueSearch + '/repos')
+        .then(res => res.json())
+        .then(
+          result => {
+            setIsLoaded(true);
+            setItems(result);
+          },
+          error => {
+            setIsLoaded(true);
+            setError(error);
+          }
+        );
+    }, 500);
   }, [valueSearch]);
 
   if (error) {
