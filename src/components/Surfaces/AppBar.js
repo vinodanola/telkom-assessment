@@ -130,6 +130,7 @@ export default function PrimarySearchAppBar(props) {
               value={props.valueSearch}
               onChange={props.handleChangeSearch}
               defaultValue={props.defaultValueSearch}
+              autoFocus
             />
           </div>
           <div className={classes.grow} />
