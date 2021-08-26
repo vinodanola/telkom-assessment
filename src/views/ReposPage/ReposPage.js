@@ -23,6 +23,7 @@ import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import AppBar from '../../components/Surfaces/AppBar.js';
 import Badge from '@material-ui/core/Badge';
 import Tooltip from '@material-ui/core/Tooltip';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,6 +33,9 @@ const useStyles = makeStyles(theme => ({
   },
   demo: {
     backgroundColor: theme.palette.background.paper
+  },
+  itemGrid: {
+    background: '#f7f8ff'
   },
   title: {
     margin: '30px 20px',
@@ -133,7 +137,7 @@ export default function InteractiveList() {
           justifyContent="center"
           alignItems="center"
         >
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={8} className={classes.itemGrid}>
             <div className={classes.rootAvatar} xs={12} md={8}>
               {users && (
                 <Avatar
@@ -144,11 +148,15 @@ export default function InteractiveList() {
               )}
             </div>
             <Typography variant="h6" className={classes.title}>
-              {valueSearch + "'s"} repositories
+              {valueSearch + "'s repositories"}
             </Typography>
             <div className={classes.demo}>
               <List dense={dense}>
-                {!items.id ? <span>{items.message}</span> : ''}
+                {!items.id && items.message ? (
+                  <Alert severity="error">{items.message}</Alert>
+                ) : (
+                  ''
+                )}
                 {items.length > 0 &&
                   items.map(item => (
                     <ListItem key={item.id}>
