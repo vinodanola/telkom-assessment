@@ -3,5 +3,5 @@ body {
 }
 
 .MuiSvgIcon-root {
-  display: block;
+  display: block !important;
 }
