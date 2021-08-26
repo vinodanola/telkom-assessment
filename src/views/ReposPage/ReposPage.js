@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     },
     width: '100%',
     textAlign: 'center',
-    marginTop: theme.spacing(5)
+    marginTop: theme.spacing(13)
   },
   avatar: {
     display: 'inline-box',
@@ -115,8 +115,6 @@ export default function InteractiveList() {
         }
       );
   }, [valueSearch]);
-
-  console.log(users);
 
   if (error) {
     return <div>Error: {error.message}</div>;

@@ -56,14 +56,15 @@ const useStyles = makeStyles(theme => ({
     color: 'inherit'
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(1, 1, 1, 1),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    //paddingLeft: `calc(1em + 0px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: '20ch'
-    }
+    },
+    textAlign: 'center'
   },
   sectionDesktop: {
     display: 'none',
@@ -113,14 +114,14 @@ export default function PrimarySearchAppBar(props) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" className={classes.appbar}>
+      <AppBar position="fixed" className={classes.appbar}>
         <Toolbar>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <GitHubIcon />
             </div>
             <InputBase
-              placeholder="type username"
+              placeholder="username"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
