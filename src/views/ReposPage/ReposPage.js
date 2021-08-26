@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -24,6 +25,11 @@ import AppBar from '../../components/Surfaces/AppBar.js';
 import Badge from '@material-ui/core/Badge';
 import Tooltip from '@material-ui/core/Tooltip';
 import Alert from '@material-ui/lab/Alert';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import PersonIcon from '@material-ui/icons/Person';
+import AddIcon from '@material-ui/icons/Add';
+import { blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,9 +63,14 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(13)
   },
   avatar: {
-    display: 'inline-box',
+    display: 'inline-flex',
+    // display: 'inline-box',
     width: theme.spacing(15),
     height: theme.spacing(15)
+  },
+  avatarDialog: {
+    backgroundColor: blue[100],
+    color: blue[600]
   },
   small: {
     width: '30px',
@@ -81,6 +92,53 @@ const StyledBadge = withStyles(theme => ({
   }
 }))(Badge);
 
+const peoples = ['user01@gmail.com', 'user02@gmail.com'];
+
+function SimpleDialog(props) {
+  const classes = useStyles();
+  const { onClose, selectedValue, open, peoples, title } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  const handleListItemClick = value => {
+    onClose(value);
+  };
+
+  return (
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby="simple-dialog-title"
+      open={open}
+    >
+      <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
+      <List>
+        {peoples.map(people => (
+          <ListItem
+            button
+            onClick={() => handleListItemClick(people)}
+            key={people}
+          >
+            <ListItemAvatar>
+              <Avatar className={classes.avatarDialog}>
+                <PersonIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={people} />
+          </ListItem>
+        ))}
+      </List>
+    </Dialog>
+  );
+}
+
+SimpleDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired
+};
+
 export default function InteractiveList() {
   const classes = useStyles();
   const [dense, setDense] = React.useState(false);
@@ -91,7 +149,39 @@ export default function InteractiveList() {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [users, setUsers] = React.useState([]);
   const [items, setItems] = React.useState([]);
+  const [peoples, setPeoples] = React.useState([]);
   const timeoutRef = useRef(null);
+
+  const [open, setOpen] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState('');
+
+  const handleClickOpen = repo => {
+    setOpen(true);
+    // fetch(
+    //   'https://api.github.com/repos/' +
+    //     valueSearch +
+    //     '/' +
+    //     repo +
+    //     '/contributors'
+    // )
+    //   .then(res => res.json())
+    //   .then(
+    //     result => {
+    //       setIsLoaded(true);
+    //       setPeoples(result);
+    //       setOpen(true);
+    //     },
+    //     error => {
+    //       setIsLoaded(true);
+    //       setError(error);
+    //     }
+    //   );
+  };
+
+  const handleClose = value => {
+    setOpen(false);
+    setSelectedValue(value);
+  };
 
   useEffect(() => {
     if (timeoutRef.current !== null) {
@@ -139,6 +229,12 @@ export default function InteractiveList() {
         <AppBar
           valueSearch={valueSearch}
           handleChangeSearch={e => setValueSearch(e.target.value)}
+        />
+        <SimpleDialog
+          selectedValue={selectedValue}
+          open={open}
+          onClose={handleClose}
+          peoples={peoples}
         />
         <Grid
           container
