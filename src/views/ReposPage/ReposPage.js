@@ -34,11 +34,13 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper
   },
   title: {
-    margin: '50px 20px'
+    margin: '50px 20px',
+    textAlign: 'center'
   },
   listItemText: {
     wordWrap: 'break-word',
-    width: '70%'
+    width: '70%',
+    fontSize: '12px'
   },
   rootAvatar: {},
   small: {
