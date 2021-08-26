@@ -100,10 +100,9 @@ export default function InteractiveList() {
         <AppBar
           valueSearch={valueSearch}
           handleChangeSearch={e => setValueSearch(e.target.value)}
-          defaultValue="octokit"
         />
-        <Grid container spacing={0}>
-          <Grid item xs={12} md={6}>
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item xs={12} md={8}>
             <Typography variant="h6" className={classes.title}>
               {valueSearch + "'s"} repositories
             </Typography>
