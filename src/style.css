@@ -4,4 +4,5 @@ body {
 
 .MuiSvgIcon-root {
   display: block !important;
+  margin: auto;
 }
