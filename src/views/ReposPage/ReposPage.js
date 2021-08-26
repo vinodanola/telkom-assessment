@@ -126,7 +126,7 @@ export default function InteractiveList() {
             setError(error);
           }
         );
-    }, 500);
+    }, 1000);
   }, [valueSearch]);
 
   if (error) {
@@ -204,7 +204,18 @@ export default function InteractiveList() {
                           </IconButton>
                         </Tooltip>
                         <Tooltip title="Download" placement="top">
-                          <IconButton edge="end">
+                          <IconButton
+                            edge="end"
+                            target="_blank"
+                            href={
+                              'https://api.github.com/repos/' +
+                              valueSearch +
+                              '/' +
+                              item.name +
+                              '/' +
+                              'zipball'
+                            }
+                          >
                             <CloudDownloadIcon />
                           </IconButton>
                         </Tooltip>
